@@ -7,10 +7,10 @@ import Footer from '../components/layouts/Footer'
 const Home = () => {
   return (
     <>
-    <Navbar/>
+    
     <Hero/>
     <FeaturedProducts/>
-    <Footer/>
+   
     </>
   )
 }
