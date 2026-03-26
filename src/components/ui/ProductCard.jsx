@@ -1,7 +1,14 @@
-const ProductCard = ({ product }) => {
-  return (
-    <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+import { useNavigate } from "react-router-dom";
 
+const ProductCard = ({ product }) => {
+
+  const navigate = useNavigate();
+
+  return (
+    <div
+      onClick={() => navigate(`/product/${product.id}`)}
+      className="border rounded-lg p-4 shadow hover:shadow-lg transition cursor-pointer bg-white text-black"
+    >
       <img
         src={product.images[0]}
         alt={product.title}
@@ -12,15 +19,11 @@ const ProductCard = ({ product }) => {
         {product.title}
       </h3>
 
-      <p className="text-green-600 font-bold mb-3">
+      <p className="text-green-600 font-bold">
         ${product.price}
       </p>
-
-      <button className="bg-green-500 text-white px-4 py-2 rounded w-full">
-        Add to Cart
-      </button>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

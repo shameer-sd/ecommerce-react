@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import ProductCard from "../components/ui/ProductCard";
 import { getProducts } from "../api";
-
 
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const search = queryParams.get("title") || "";
+
   const fetchProducts = async () => {
     try {
-
-      const data = await getProducts()
+      const data = await getProducts(search);
       setProducts(data);
     } catch (error) {
       console.log("Error fetching products", error);
@@ -21,8 +25,7 @@ const Product = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
-
+  }, [search]); // 👈 important
   if (loading) {
     return (
       <h2 className="text-center text-xl py-20 bg-sky-950 text-white">
@@ -51,3 +54,4 @@ const Product = () => {
 };
 
 export default Product;
+

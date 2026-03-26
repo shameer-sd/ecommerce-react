@@ -1,6 +1,7 @@
 
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import {loginUser} from "../api"
 
 const Login = () => {
 
@@ -19,63 +20,35 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // const users = JSON.parse(localStorage.getItem("users")) || [];
+  try {
 
-    // const user = users.find(
-    //   (u) =>
-    //     u.email === formData.email &&
-    //     u.password === formData.password
-    // );
+    const data = await loginUser(formData.email, formData.password)
 
-    // if (user) {
-    //   localStorage.setItem("currentUser", JSON.stringify(user));
-    //   alert("Login Successful!");
-    //   Navigate("/",{replace:true});
+    console.log(data)
 
-    // } else {
-    //   alert("Invalid email or password");
-    // }
+    if (data.access_token) {
 
-    try {
-      const response=await fetch("https://api.escuelajs.co/api/v1/auth/login",{
-        method:'POST',
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email:formData.email,
-          password:formData.password
-        })
-      })
+      localStorage.setItem("token", data.access_token)
 
-      const data =await response.json();
-      console.log(data);
-      if(response.ok && data.access_token){
+      localStorage.setItem("userName", formData.email)
+      navigate("/", { replace: true })
 
-        localStorage.setItem('token',data.access_token)
+    } else {
 
-        alert("success")
-        navigate("/",{replace:true});
+      alert("Invalid email or password")
 
-        
-      }else{
-        alert("Invalid email or password");
-        console.log(data.message);
-        
-      }
-
-      
-
-    } catch (error) {
-      alert("error occured");
-      console.log(error);
-      
-      
     }
-  };
+
+  } catch (error) {
+
+    alert("Error occurred")
+    console.log(error)
+
+  }
+};
 
 
   return (
@@ -109,7 +82,7 @@ const Login = () => {
             className="p-3 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-green-500"
           />
 
-          <button className="bg-green-500 text-black font-semibold py-3 rounded hover:bg-green-400 transition">
+          <button type="submit" className="bg-green-500 text-black font-semibold py-3 rounded hover:bg-green-400 transition">
             Login
           </button>
 

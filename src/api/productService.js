@@ -1,7 +1,10 @@
 import { apiClient } from "./apiClient";
 
 // get all products
-export const getProducts = () => {
+export const getProducts = (search = "") => {
+  if (search) {
+    return apiClient(`/products/?title=${search}`);
+  }
   return apiClient("/products");
 };
 

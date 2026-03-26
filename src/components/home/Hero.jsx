@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <section className="bg-green-500 text-white  py-20 text-center">
+    <section className="bg-tael-300 text-white  py-20 text-center">
       <h1 className="text-4xl font-bold mb-4 text-sky-800">
          Fake Store
       </h1>
@@ -11,7 +11,7 @@ const Hero = () => {
 
       <button className="bg-sky-950 text-green-400 px-6 py-2 rounded font-semibold">
         Shop Now
-      </button>
+      </button>   
     </section>
   )
 }
